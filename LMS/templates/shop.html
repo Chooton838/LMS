@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{{ product.imageURL }}">
+            <div class="box-element product">
+                <h6><strong>{{ product.name }}</strong></h6>
+                <hr>
+                <strong> Days Needed: {{ product.days }} </strong>
+                <h4 style="display: inline-block; float: right"><strong>${{ product.price|floatformat:2 }}</strong></h4>
+                <br>
+
+            </div>
+        </div>
+
+
+        {% endfor %}
+
+    </div>
+
+    <br><br>
+
+    <div class="row">
+        <div class="container">
+            <h6> Till now that's all we are offering for you. Hopefully Something bigger is coming. Any Kind of <strong>
+                <a href="{% url 'home' %}">  Suggestions </a></strong> would be very much <b><font color="RED"> Appreciated. </font></b></h6>
+        </div>
+    </div>
+
+    <br><br>
+
+{% endblock content %}
+
+
