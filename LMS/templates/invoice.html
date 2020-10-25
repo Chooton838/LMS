@@ -1,0 +1,120 @@
+<html>
+<head>
+    <title> LMS </title>
+
+	<meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<style>
+        .box-element{
+            box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+            background-color: #fff;
+            border-radius: 4px;
+            padding: 10px;
+        }
+
+        .col-lg-6{
+            margin-top: 10px;
+        }
+
+        .cart-row{
+            display: flex;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ececec;
+
+        }
+        table, th, td {
+            border: 1px solid #726f6f;
+            border-collapse: collapse;
+            padding: 15px;
+        }
+        .a {
+            line-height: normal;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box-element">
+            <div class="card card-body">
+
+                <div class="cart-row">
+                    <div align="center" class="a">
+                        <address><h2><B><U> WASH OUT </U></B></h2>
+                            Cell No: +88 01689343838, Email: choton838@gmail.com <br>
+                            West Bhashantek, Dhaka Cant. Dhaka - 1206, Bangladesh </i><br>
+                        </address>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="cart-row">
+                    <div class="a">
+                        <address> <h2><b> INVOICE: # {{ order.transaction_id }} </b></h2> <br>
+                            <h3><b> {{ customer.name }} </b></h3> <br>
+                            <strong> Cell No:</strong> {{ customer.cell_no }} <br>
+                            <strong> Email:</strong> {{ customer.email }} <br>
+                            <strong> Address:</strong> {{ customer.address }} <br>
+                        </address>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="cart-row">
+                    <table class="table" style="background-color:#eae2e2">
+                        <thead align="center">
+                            <tr style="background-color:#c3ad9c">
+                                <td><b> SN </b></td>
+                                <td><b> Item </b></td>
+                                <td><b> Unit Price </b></td>
+                                <td><b> Quantity </b></td>
+                                <td><b> Total </b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr>
+                                <td> {{ forloop.counter }} </td>
+                                <td> {{ item.product.name }} </td>
+                                <td align="center"> ${{ item.product.price }} </td>
+                                <td align="center"> x{{ item.quantity }} </td>
+                                <td align="center"> ${{item.get_total|floatformat:2}} </td>
+                            </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td align="right" colspan="4"><strong>Total Amount: </strong></td>
+                                <td align="center"><strong> ${{ order.get_cart_total|floatformat:2 }} </strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+
+                <div lass="cart-row">
+                    <address> <strong> Order Date:</strong> {{ order.date_ordered.date }} <br>
+                        <strong> Delivery Date:</strong> {{ order.deliver_date }} <br>
+                        <strong> Cashier:</strong> {{ request.user }} </address>
+                    <h5 style="color: rgb(140, 140, 140);">Thank you for your business!</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+</html>

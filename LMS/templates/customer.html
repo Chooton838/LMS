@@ -1,0 +1,53 @@
+{% extends 'staff_main.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5 align="center"><b> CUSTOMERS </b></h5>
+            <hr>
+            <div class="card card-body">
+
+                <form method="get">
+                    {{ myFilter.form }}
+                    <button class="btn btn-primary" type="submit"> Search </button>
+                </form>
+            </div>
+
+            <br>
+
+            <div class="card card-body">
+                <a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_customer' %}"> Create Customer </a>
+                <hr>
+                <br>
+                <table class="table table-sm">
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone No</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+
+                    {% for i in customer %}
+                        <tr>
+
+                            <td>{{i.name}}</td>
+                            <td>{{i.cell_no}}</td>
+                            <td>{{i.address}}</td>
+                            <td>{{i.email}}</td>
+                            <td><a class="btn btn-primary btn-sm btn-block" href="{% url 'manage_order' i.id %}"> Order </a></td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+
+{% endblock content %}

@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import timedelta
 
 
 class Customer(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
     email = models.CharField(max_length=200, null=True, blank=True)
-    cell_no = models.CharField(max_length=200, null=False, blank=False)
+    cell_no = models.CharField(max_length=200, unique=True, null=False, blank=False)
     address = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
@@ -34,10 +35,24 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
-    transaction_id = models.CharField(max_length=100, null=True)
 
     def __str__(self):
-        return str(self.transaction_id)
+        return str(self.id)
+
+    @property
+    def transaction_id(self):
+        t_id = str("LMS_" + str(self.id + 1000))
+        return t_id
+
+    @property
+    def deliver_date(self):
+
+        orderitems = self.orderitem_set.all()
+        days = max([item.day for item in orderitems])
+        x = self.date_ordered + timedelta(days)
+        dd = x.strftime("%b. %d, %Y")
+
+        return dd
 
     @property
     def get_cart_total(self):
@@ -63,15 +78,6 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
-
-"""class ShippingAddress(models.Model):
-    name = models.CharField(max_length=200, null=False)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    address = models.CharField(max_length=200, null=False)
-    city = models.CharField(max_length=200, null=False)
-    state = models.CharField(max_length=200, null=False)
-    zipcode = models.CharField(max_length=200, null=False)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.address"""
+    @property
+    def day(self):
+        return self.product.days
